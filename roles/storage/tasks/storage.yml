@@ -1,0 +1,24 @@
+---
+- name: Storage Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: List mounted filesystems
+      command: mount | column -t
+      register: mounts
+    - name: Check if /mnt/storage exists
+      stat:
+        path: /mnt/storage
+      register: storage_stat
+    - name: Check if /mnt/storage is mounted
+      shell: mount | grep /mnt/storage
+      register: storage_mounted
+      ignore_errors: yes
+    - name: Check available space on /mnt/storage
+      command: df -h /mnt/storage
+      register: storage_df
+      ignore_errors: yes
+    - name: Check for running nfsd process
+      shell: pgrep nfsd
+      register: nfsd_proc
+      ignore_errors: yes

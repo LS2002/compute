@@ -1,0 +1,24 @@
+---
+- name: Process Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: List running processes
+      command: ps aux
+      register: ps_aux
+    - name: Check if sshd process is running
+      shell: pgrep sshd
+      register: sshd_proc
+      ignore_errors: yes
+    - name: Check if cron process is running
+      shell: pgrep cron
+      register: cron_proc
+      ignore_errors: yes
+    - name: Check if systemd process is running
+      shell: pgrep systemd
+      register: systemd_proc
+      ignore_errors: yes
+    - name: Check if any zombie processes exist
+      shell: ps aux | awk '{ if ($8 == "Z") print $0; }'
+      register: zombie_procs
+      ignore_errors: yes

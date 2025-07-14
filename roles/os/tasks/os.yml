@@ -1,0 +1,22 @@
+---
+- name: OS Module Test Playbook
+  hosts: testservers
+  gather_facts: yes
+  tasks:
+    - name: Check OS release info
+      command: cat /etc/os-release
+      register: os_release
+    - name: Check kernel version
+      command: uname -r
+      register: kernel_version
+    - name: Check if systemd is running
+      shell: pgrep systemd
+      register: systemd_proc
+      ignore_errors: yes
+    - name: Check uptime
+      command: uptime
+      register: uptime
+    - name: Check for /etc/passwd file
+      stat:
+        path: /etc/passwd
+      register: passwd_stat

@@ -1,0 +1,13 @@
+---
+- name: Check OS release info
+  command: cat /etc/os-release
+  register: os_release
+
+- name: Check /etc/os-release file size
+  stat:
+    path: /etc/os-release
+  register: os_release_stat
+
+- name: Validate /etc/os-release contains 'ID'
+  shell: grep 'ID=' /etc/os-release
+  register: os_id_grep 

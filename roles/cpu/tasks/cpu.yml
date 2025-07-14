@@ -1,0 +1,23 @@
+---
+- name: CPU Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: Check CPU info
+      command: lscpu
+      register: cpu_info
+    - name: Ensure /proc/cpuinfo exists
+      stat:
+        path: /proc/cpuinfo
+      register: cpuinfo_stat
+    - name: Check if 'htop' process is running
+      shell: pgrep htop
+      register: htop_proc
+      ignore_errors: yes
+    - name: Check CPU temperature file exists
+      stat:
+        path: /sys/class/thermal/thermal_zone0/temp
+      register: temp_stat
+    - name: Check CPU usage
+      shell: top -bn1 | grep 'Cpu(s)'
+      register: cpu_usage

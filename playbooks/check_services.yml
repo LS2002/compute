@@ -1,0 +1,6 @@
+---
+- name: Check Services
+  hosts: compute
+  become: yes
+  roles:
+    - services 

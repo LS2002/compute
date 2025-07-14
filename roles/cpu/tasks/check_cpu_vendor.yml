@@ -1,0 +1,13 @@
+---
+- name: Check CPU vendor
+  shell: grep 'vendor_id' /proc/cpuinfo | uniq
+  register: cpu_vendor
+
+- name: Check /proc/cpuinfo file size
+  stat:
+    path: /proc/cpuinfo
+  register: cpuinfo_stat
+
+- name: Validate /proc/cpuinfo contains 'flags'
+  shell: grep 'flags' /proc/cpuinfo
+  register: cpu_flags 

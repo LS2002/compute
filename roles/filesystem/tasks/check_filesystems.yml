@@ -1,0 +1,14 @@
+---
+- name: List filesystems
+  command: df -T
+  register: filesystems
+
+- name: Check /etc/fstab file size
+  stat:
+    path: /etc/fstab
+  register: fstab_stat
+
+- name: Validate /etc/fstab contains 'ext4'
+  shell: grep 'ext4' /etc/fstab
+  register: fstab_ext4_grep
+  ignore_errors: yes 

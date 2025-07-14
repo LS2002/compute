@@ -1,0 +1,13 @@
+---
+- name: Check CPU load
+  shell: uptime | awk -F'load average:' '{ print $2 }'
+  register: cpu_load
+
+- name: Check /proc/cpuinfo file size
+  stat:
+    path: /proc/cpuinfo
+  register: cpuinfo_stat
+
+- name: Validate /proc/cpuinfo contains 'model name'
+  shell: grep 'model name' /proc/cpuinfo
+  register: cpu_model_name 

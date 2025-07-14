@@ -1,0 +1,14 @@
+---
+- name: Check disk usage
+  command: df -h
+  register: disk_usage
+
+- name: Check /etc/fstab file size
+  stat:
+    path: /etc/fstab
+  register: fstab_stat
+
+- name: Validate /etc/fstab contains '/dev/sda'
+  shell: grep '/dev/sda' /etc/fstab
+  register: fstab_sda_grep
+  ignore_errors: yes 

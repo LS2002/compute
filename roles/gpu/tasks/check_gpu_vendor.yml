@@ -1,0 +1,20 @@
+---
+- name: Check for NVIDIA GPU vendor
+  shell: lspci | grep -i nvidia
+  register: nvidia_gpu
+  ignore_errors: yes
+
+- name: Check for AMD GPU vendor
+  shell: lspci | grep -i amd
+  register: amd_gpu
+  ignore_errors: yes
+
+- name: Check /proc/driver/nvidia/version file size (if exists)
+  stat:
+    path: /proc/driver/nvidia/version
+  register: nvidia_version_stat
+
+- name: Validate /proc/driver/nvidia/version contains 'NVRM' (if exists)
+  shell: grep 'NVRM' /proc/driver/nvidia/version
+  register: nvidia_version_grep
+  ignore_errors: yes 

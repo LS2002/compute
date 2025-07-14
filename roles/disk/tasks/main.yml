@@ -1,0 +1,3 @@
+---
+- import_tasks: check_disk_usage.yml
+- import_tasks: check_smart_status.yml 

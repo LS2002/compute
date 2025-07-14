@@ -1,0 +1,6 @@
+---
+- name: Check CPU
+  hosts: compute
+  become: yes
+  roles:
+    - cpu 

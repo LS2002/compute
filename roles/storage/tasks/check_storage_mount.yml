@@ -1,0 +1,15 @@
+---
+- name: Check if /mnt/storage exists
+  stat:
+    path: /mnt/storage
+  register: storage_stat
+
+- name: Check /mnt/storage file size
+  stat:
+    path: /mnt/storage
+  register: storage_stat_size
+
+- name: Validate /mnt/storage is mounted
+  shell: mount | grep /mnt/storage
+  register: storage_mounted
+  ignore_errors: yes 

@@ -1,0 +1,17 @@
+---
+- name: Check if ssh service is active
+  shell: systemctl is-active ssh
+  register: ssh_service
+  ignore_errors: yes
+
+- name: Check /etc/init.d/ssh file size
+  stat:
+    path: /etc/init.d/ssh
+  register: ssh_initd_stat
+  ignore_errors: yes
+
+- name: Validate /etc/init.d/ssh exists
+  stat:
+    path: /etc/init.d/ssh
+  register: ssh_initd_exists
+  ignore_errors: yes 

@@ -1,0 +1,13 @@
+---
+- name: List running services
+  shell: systemctl list-units --type=service --state=running
+  register: running_services
+
+- name: Check /etc/systemd/system directory size
+  shell: du -sh /etc/systemd/system
+  register: systemd_dir_size
+
+- name: Validate /etc/systemd/system exists
+  stat:
+    path: /etc/systemd/system
+  register: systemd_exists 

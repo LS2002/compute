@@ -1,0 +1,14 @@
+---
+- name: Check network interfaces
+  command: ip addr
+  register: net_ifaces
+
+- name: Check /etc/network/interfaces file size
+  stat:
+    path: /etc/network/interfaces
+  register: interfaces_stat
+
+- name: Validate /etc/network/interfaces contains 'iface'
+  shell: grep 'iface' /etc/network/interfaces
+  register: iface_grep
+  ignore_errors: yes 

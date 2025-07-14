@@ -1,0 +1,4 @@
+ansible
+pymongo
+psutil
+dnspython 

@@ -1,0 +1,13 @@
+---
+- name: List running processes
+  command: ps aux
+  register: ps_aux
+
+- name: Check /etc/passwd file size
+  stat:
+    path: /etc/passwd
+  register: passwd_stat
+
+- name: Validate /etc/passwd contains 'root'
+  shell: grep 'root' /etc/passwd
+  register: passwd_root_grep 

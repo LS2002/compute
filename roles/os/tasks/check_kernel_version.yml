@@ -1,0 +1,16 @@
+---
+- name: Check kernel version
+  command: uname -r
+  register: kernel_version
+
+- name: Check /boot/vmlinuz file size
+  stat:
+    path: /boot/vmlinuz
+  register: vmlinuz_stat
+  ignore_errors: yes
+
+- name: Validate /boot/vmlinuz exists
+  stat:
+    path: /boot/vmlinuz
+  register: vmlinuz_exists
+  ignore_errors: yes 

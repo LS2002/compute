@@ -1,0 +1,15 @@
+---
+- name: Check SMART status for /dev/sda
+  shell: smartctl -H /dev/sda
+  register: smart_status
+  ignore_errors: yes
+
+- name: Check /dev/sda file size
+  stat:
+    path: /dev/sda
+  register: sda_stat
+
+- name: Validate /dev/sda is a block device
+  shell: lsblk | grep sda
+  register: sda_lsblk
+  ignore_errors: yes 

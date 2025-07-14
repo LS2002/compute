@@ -1,0 +1,23 @@
+---
+- name: Network Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: Check network interfaces
+      command: ip addr
+      register: net_ifaces
+    - name: Check if eth0 exists
+      stat:
+        path: /sys/class/net/eth0
+      register: eth0_stat
+    - name: Check if network is up
+      command: ping -c 1 8.8.8.8
+      register: ping_test
+      ignore_errors: yes
+    - name: Check for running NetworkManager process
+      shell: pgrep NetworkManager
+      register: nm_proc
+      ignore_errors: yes
+    - name: Check routing table
+      command: ip route
+      register: ip_route

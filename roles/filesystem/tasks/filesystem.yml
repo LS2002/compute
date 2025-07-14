@@ -1,0 +1,24 @@
+---
+- name: Filesystem Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: List filesystems
+      command: df -T
+      register: filesystems
+    - name: Check if /etc/fstab exists
+      stat:
+        path: /etc/fstab
+      register: fstab_stat
+    - name: Check if /tmp is mounted
+      shell: mount | grep 'on /tmp '
+      register: tmp_mounted
+      ignore_errors: yes
+    - name: Check inode usage
+      command: df -i
+      register: inode_usage
+    - name: Check for lost+found in /
+      stat:
+        path: /lost+found
+      register: lostfound_stat
+      ignore_errors: yes

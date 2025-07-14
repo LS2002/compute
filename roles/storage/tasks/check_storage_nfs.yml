@@ -1,0 +1,16 @@
+---
+- name: Check for running nfsd process
+  shell: pgrep nfsd
+  register: nfsd_proc
+  ignore_errors: yes
+
+- name: Check /etc/exports file size
+  stat:
+    path: /etc/exports
+  register: exports_stat
+  ignore_errors: yes
+
+- name: Validate /etc/exports contains '/mnt/storage'
+  shell: grep '/mnt/storage' /etc/exports
+  register: exports_grep
+  ignore_errors: yes 

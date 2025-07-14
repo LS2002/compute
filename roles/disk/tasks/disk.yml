@@ -1,0 +1,23 @@
+---
+- name: Disk Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: Check disk usage
+      command: df -h
+      register: disk_usage
+    - name: List block devices
+      command: lsblk
+      register: block_devices
+    - name: Ensure /dev/sda exists
+      stat:
+        path: /dev/sda
+      register: sda_stat
+    - name: Check for running smartd process
+      shell: pgrep smartd
+      register: smartd_proc
+      ignore_errors: yes
+    - name: Check SMART status for /dev/sda
+      shell: smartctl -H /dev/sda
+      register: smart_status
+      ignore_errors: yes

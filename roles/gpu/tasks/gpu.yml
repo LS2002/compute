@@ -1,0 +1,26 @@
+---
+- name: GPU Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: Check for NVIDIA GPU
+      shell: lspci | grep -i nvidia
+      register: nvidia_gpu
+      ignore_errors: yes
+    - name: Check for AMD GPU
+      shell: lspci | grep -i amd
+      register: amd_gpu
+      ignore_errors: yes
+    - name: Check if nvidia-smi exists
+      stat:
+        path: /usr/bin/nvidia-smi
+      register: nvidia_smi_stat
+    - name: Check if nvidia-smi runs
+      shell: nvidia-smi
+      register: nvidia_smi_out
+      ignore_errors: yes
+    - name: Check GPU temperature file exists
+      stat:
+        path: /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input
+      register: gpu_temp_stat
+      ignore_errors: yes

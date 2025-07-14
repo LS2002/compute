@@ -1,0 +1,3 @@
+---
+- import_tasks: check_network_interfaces.yml
+- import_tasks: check_network_status.yml 

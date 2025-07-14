@@ -1,0 +1,22 @@
+---
+- name: Memory Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: Check memory info
+      command: free -h
+      register: mem_info
+    - name: Ensure /proc/meminfo exists
+      stat:
+        path: /proc/meminfo
+      register: meminfo_stat
+    - name: Check swap usage
+      command: swapon --show
+      register: swap_info
+    - name: Check if 'memtester' process is running
+      shell: pgrep memtester
+      register: memtester_proc
+      ignore_errors: yes
+    - name: Check hugepages info
+      command: cat /proc/meminfo | grep HugePages
+      register: hugepages_info

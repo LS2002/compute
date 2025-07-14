@@ -1,0 +1,6 @@
+---
+- name: Check Process
+  hosts: compute
+  become: yes
+  roles:
+    - process 

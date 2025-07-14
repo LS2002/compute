@@ -1,0 +1,3 @@
+---
+- import_tasks: check_os_release.yml
+- import_tasks: check_kernel_version.yml 

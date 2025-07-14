@@ -1,0 +1,6 @@
+---
+- name: Check Memory
+  hosts: compute
+  become: yes
+  roles:
+    - memory 

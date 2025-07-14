@@ -1,0 +1,24 @@
+---
+- name: Services Module Test Playbook
+  hosts: testservers
+  gather_facts: no
+  tasks:
+    - name: List running services
+      shell: systemctl list-units --type=service --state=running
+      register: running_services
+    - name: Check if ssh service is active
+      shell: systemctl is-active ssh
+      register: ssh_service
+      ignore_errors: yes
+    - name: Check if cron service is active
+      shell: systemctl is-active cron
+      register: cron_service
+      ignore_errors: yes
+    - name: Check if NetworkManager service is active
+      shell: systemctl is-active NetworkManager
+      register: nm_service
+      ignore_errors: yes
+    - name: Check if docker service is active
+      shell: systemctl is-active docker
+      register: docker_service
+      ignore_errors: yes

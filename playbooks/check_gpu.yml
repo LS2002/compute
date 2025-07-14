@@ -1,0 +1,6 @@
+---
+- name: Check GPU
+  hosts: compute
+  become: yes
+  roles:
+    - gpu 

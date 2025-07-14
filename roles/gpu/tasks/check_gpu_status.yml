@@ -1,0 +1,21 @@
+---
+- name: Check if nvidia-smi exists
+  stat:
+    path: /usr/bin/nvidia-smi
+  register: nvidia_smi_stat
+
+- name: Run nvidia-smi if exists
+  shell: nvidia-smi
+  register: nvidia_smi_out
+  ignore_errors: yes
+
+- name: Check /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input file size (if exists)
+  stat:
+    path: /sys/class/drm/card0/device/hwmon/hwmon0/temp1_input
+  register: gpu_temp_stat
+  ignore_errors: yes
+
+- name: Validate nvidia-smi output contains 'NVIDIA-SMI' (if exists)
+  shell: nvidia-smi | grep 'NVIDIA-SMI'
+  register: nvidia_smi_grep
+  ignore_errors: yes 

@@ -1,0 +1,15 @@
+---
+- name: Check if eth0 exists
+  stat:
+    path: /sys/class/net/eth0
+  register: eth0_stat
+
+- name: Check /sys/class/net/eth0 file size
+  stat:
+    path: /sys/class/net/eth0
+  register: eth0_stat_size
+
+- name: Validate eth0 is up
+  shell: cat /sys/class/net/eth0/operstate
+  register: eth0_state
+  ignore_errors: yes 

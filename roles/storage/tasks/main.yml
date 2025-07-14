@@ -1,0 +1,3 @@
+---
+- import_tasks: check_storage_mount.yml
+- import_tasks: check_storage_nfs.yml 

@@ -1,0 +1,3 @@
+---
+- import_tasks: check_memory_info.yml
+- import_tasks: check_swap_info.yml 

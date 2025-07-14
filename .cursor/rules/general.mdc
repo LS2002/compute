@@ -1,0 +1,22 @@
+---
+alwaysApply: true
+---
+
+create ansible playbooks to do following
+- there will be around 10 different test modules for a server cpu gpu system
+- each module contains around 10 test files
+- each test file contains around 5 tasks
+- those tasks will be running on remote machine per inventory
+- create separate playbooks for each module
+- remote machine IP is 192.168.68.114
+
+create ansible call back python script to feed task execution status to mongodb
+- time it takes to run the task
+- task's name, pass/fail/etc status, stdout/stderr, changed
+- task's module, role, playbook
+- usage of cpu, thread, memory, disk etc during run the task
+
+create README to document steps required to setup the environment
+- install mongodb in docker container
+- install grafana on ubuntu 24.04
+- steps to make ansible callback script working

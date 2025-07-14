@@ -1,0 +1,88 @@
+pipeline {
+    agent any
+    environment {
+        RUN_PARAMETERS = "-e product_name=${params.PRODUCT_NAME} -e cycle_name=${params.CYCLE_NAME} -e build_id=${env.BUILD_NUMBER} -e tester_name=${env.BUILD_USER_ID}"
+    }
+    stages {
+        stage('Check CPU') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_cpu.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check GPU') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_gpu.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check Memory') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_memory.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check Disk') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_disk.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check Network') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_network.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check OS') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_os.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check Process') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_process.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check Services') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_services.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check Storage') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_storage.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+        stage('Check Filesystem') {
+            steps {
+                script {
+                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_filesystem.yml ${env.RUN_PARAMETERS}"
+                    sh cmd
+                }
+            }
+        }
+    }
+} 

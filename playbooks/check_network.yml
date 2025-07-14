@@ -1,0 +1,6 @@
+---
+- name: Check Network
+  hosts: compute
+  become: yes
+  roles:
+    - network 

@@ -1,0 +1,13 @@
+---
+- name: Check memory info
+  command: free -h
+  register: mem_info
+
+- name: Check /proc/meminfo file size
+  stat:
+    path: /proc/meminfo
+  register: meminfo_stat
+
+- name: Validate /proc/meminfo contains 'MemTotal'
+  shell: grep 'MemTotal' /proc/meminfo
+  register: memtotal_grep 

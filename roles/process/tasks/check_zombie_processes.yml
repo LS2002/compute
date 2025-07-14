@@ -1,0 +1,14 @@
+---
+- name: Check for zombie processes
+  shell: ps aux | awk '{ if ($8 == "Z") print $0; }'
+  register: zombie_procs
+  ignore_errors: yes
+
+- name: Check /proc directory size
+  shell: du -sh /proc
+  register: proc_dir_size
+
+- name: Validate /proc exists
+  stat:
+    path: /proc
+  register: proc_exists 

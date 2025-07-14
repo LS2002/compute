@@ -1,0 +1,14 @@
+---
+- name: Check if /tmp is mounted
+  shell: mount | grep 'on /tmp '
+  register: tmp_mounted
+  ignore_errors: yes
+
+- name: Check /tmp directory size
+  shell: du -sh /tmp
+  register: tmp_dir_size
+
+- name: Validate /tmp exists
+  stat:
+    path: /tmp
+  register: tmp_exists 

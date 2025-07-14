@@ -1,0 +1,14 @@
+---
+- name: Check swap usage
+  command: swapon --show
+  register: swap_info
+
+- name: Check /proc/swaps file size
+  stat:
+    path: /proc/swaps
+  register: swaps_stat
+
+- name: Validate /proc/swaps contains 'partition'
+  shell: grep 'partition' /proc/swaps
+  register: swaps_partition_grep
+  ignore_errors: yes 
