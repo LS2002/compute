@@ -1,7 +1,7 @@
 pipeline {
     agent { label params.WORKER }
     environment {
-        MONGO_URI = params.MONGODB_URI
+        DB_URI = "${params.DB_URI}"
     }
     stages {
         stage('Prepare') {
