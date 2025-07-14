@@ -1,6 +1,10 @@
 pipeline {
     agent any
     environment {
+        SELECTED_STAGES = "${params.STAGES.split(',').collect { it.trim() }}"
+    }
+    parameters {
+        string(name: 'INVENTORY', defaultValue: 'inventory.yml', description: 'Inventory file to use (relative to inventory/)')
     }
     stages {
         stage('Update PCB Vars') {
@@ -17,81 +21,111 @@ tester_name: \"${env.BUILD_USER_ID}\"
             }
         }
         stage('Check CPU') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check CPU') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_cpu.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_cpu.yml"
                     sh cmd
                 }
             }
         }
         stage('Check GPU') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check GPU') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_gpu.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_gpu.yml"
                     sh cmd
                 }
             }
         }
         stage('Check Memory') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check Memory') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_memory.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_memory.yml"
                     sh cmd
                 }
             }
         }
         stage('Check Disk') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check Disk') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_disk.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_disk.yml"
                     sh cmd
                 }
             }
         }
         stage('Check Network') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check Network') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_network.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_network.yml"
                     sh cmd
                 }
             }
         }
         stage('Check OS') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check OS') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_os.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_os.yml"
                     sh cmd
                 }
             }
         }
         stage('Check Process') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check Process') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_process.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_process.yml"
                     sh cmd
                 }
             }
         }
         stage('Check Services') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check Services') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_services.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_services.yml"
                     sh cmd
                 }
             }
         }
         stage('Check Storage') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check Storage') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_storage.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_storage.yml"
                     sh cmd
                 }
             }
         }
         stage('Check Filesystem') {
+            when {
+                expression { env.SELECTED_STAGES.contains('Check Filesystem') }
+            }
             steps {
                 script {
-                    def cmd = "ansible-playbook -i inventory/inventory.yml playbooks/check_filesystem.yml"
+                    def cmd = "ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_filesystem.yml"
                     sh cmd
                 }
             }
