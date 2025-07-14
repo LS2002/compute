@@ -1,4 +1,5 @@
 ansible
 pymongo
 psutil
+influxdb-client
 dnspython 
