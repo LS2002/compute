@@ -9,6 +9,14 @@ import psutil
 from pymongo import MongoClient
 from ansible.plugins.callback import CallbackBase
 import traceback
+import sys
+
+def log_debug(msg):
+    try:
+        with open('/tmp/mongo_logger_debug.log', 'a') as f:
+            f.write(f"{datetime.datetime.utcnow().isoformat()} {msg}\n")
+    except Exception as e:
+        pass
 
 DOCUMENTATION = r'''
     callback: mongo_logger
@@ -30,11 +38,14 @@ class CallbackModule(CallbackBase):
     def __init__(self):
         super(CallbackModule, self).__init__()
         try:
-            self.client = MongoClient('mongodb://admin:nvidia2025@192.168.68.101:27017/')
+            log_debug('mongo_logger __init__ called')
+            self.client = MongoClient(os.environ.get('MONGO_URI', 'mongodb://admin:mongo2025@192.168.68.101:27017/'))
             self.db = self.client['ansible_logs']
             self.collection = self.db['task_logs']
             self.task_start_times = {}
+            log_debug('mongo_logger connected to MongoDB')
         except Exception as e:
+            log_debug(f'Exception in __init__: {e}\n{traceback.format_exc()}')
             pass
 
     def _get_resource_usage(self):
@@ -71,6 +82,7 @@ class CallbackModule(CallbackBase):
 
     def _log_task_result(self, result, status):
         try:
+            log_debug(f'_log_task_result called for task: {getattr(result._task, "get_name", lambda: "unknown")()} with status: {status}')
             task = result._task
             playbook_name = None
             try:
@@ -99,5 +111,7 @@ class CallbackModule(CallbackBase):
                 'tester_name': host_vars.get('tester_name', 'no_tester'),
             }
             self.collection.insert_one(log_entry)
-        except Exception:
+            log_debug(f'Inserted log entry for task: {task.get_name()}')
+        except Exception as e:
+            log_debug(f'Exception in _log_task_result: {e}\n{traceback.format_exc()}')
             pass 
