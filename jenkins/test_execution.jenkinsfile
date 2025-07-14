@@ -1,11 +1,5 @@
 pipeline {
     agent any
-    environment {
-        SELECTED_STAGES = "${params.STAGES.split(',').collect { it.trim() }}"
-    }
-    parameters {
-        string(name: 'INVENTORY', defaultValue: 'inventory.yml', description: 'Inventory file to use (relative to inventory/)')
-    }
     stages {
         stage('Update PCB Vars') {
             steps {
@@ -22,7 +16,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check CPU') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check CPU') }
+                expression { params.STAGES.contains('Check CPU') }
             }
             steps {
                 script {
@@ -33,7 +27,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check GPU') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check GPU') }
+                expression { params.STAGES.contains('Check GPU') }
             }
             steps {
                 script {
@@ -44,7 +38,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check Memory') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check Memory') }
+                expression { params.STAGES.contains('Check Memory') }
             }
             steps {
                 script {
@@ -55,7 +49,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check Disk') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check Disk') }
+                expression { params.STAGES.contains('Check Disk') }
             }
             steps {
                 script {
@@ -66,7 +60,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check Network') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check Network') }
+                expression { params.STAGES.contains('Check Network') }
             }
             steps {
                 script {
@@ -77,7 +71,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check OS') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check OS') }
+                expression { params.STAGES.contains('Check OS') }
             }
             steps {
                 script {
@@ -88,7 +82,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check Process') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check Process') }
+                expression { params.STAGES.contains('Check Process') }
             }
             steps {
                 script {
@@ -99,7 +93,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check Services') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check Services') }
+                expression { params.STAGES.contains('Check Services') }
             }
             steps {
                 script {
@@ -110,7 +104,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check Storage') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check Storage') }
+                expression { params.STAGES.contains('Check Storage') }
             }
             steps {
                 script {
@@ -121,7 +115,7 @@ tester_name: \"${env.BUILD_USER_ID}\"
         }
         stage('Check Filesystem') {
             when {
-                expression { env.SELECTED_STAGES.contains('Check Filesystem') }
+                expression { params.STAGES.contains('Check Filesystem') }
             }
             steps {
                 script {
