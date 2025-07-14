@@ -1,5 +1,8 @@
 pipeline {
     agent { label params.WORKER }
+    environment {
+        MONGO_URI = params.MONGODB_URI
+    }
     stages {
         stage('Prepare') {
             steps {
@@ -26,9 +29,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check CPU') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_cpu.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_cpu.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -37,9 +42,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check GPU') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_gpu.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_gpu.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -48,9 +55,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check Memory') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_memory.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_memory.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -59,9 +68,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check Disk') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_disk.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_disk.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -70,9 +81,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check Network') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_network.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_network.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -81,9 +94,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check OS') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_os.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_os.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -92,9 +107,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check Process') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_process.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_process.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -103,9 +120,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check Services') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_services.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_services.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -114,9 +133,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check Storage') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_storage.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_storage.yml"
+                        sh cmd
+                    }
                 }
             }
         }
@@ -125,9 +146,11 @@ tester_name: \"${env.BUILD_USER_ID}\"
                 expression { params.STAGES.contains('Check Filesystem') }
             }
             steps {
-                script {
-                    def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_filesystem.yml"
-                    sh cmd
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    script {
+                        def cmd = ". venv-ansible/bin/activate && ansible-playbook -i inventory/${params.INVENTORY} playbooks/check_filesystem.yml"
+                        sh cmd
+                    }
                 }
             }
         }
