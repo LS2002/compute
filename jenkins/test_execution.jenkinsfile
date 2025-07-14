@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label params.RUNNER }
     stages {
         stage('Update PCB Vars') {
             steps {
